@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luo.dao.SearchDao">
+<resultMap id="BaseResultMap" type="com.luo.domain.User">
+        <id column="USER_ID" property="userId" jdbcType="INTEGER" />
+        <result column="USER_NAME" property="userName" jdbcType="CHAR" />
+        <result column="USER_PASSWORD" property="userPassword" jdbcType="CHAR" />
+</resultMap>
+    <select id="searchUserByName" resultMap="BaseResultMap">
+    	SELECT * FROM t_user WHERE USER_NAME = #{userName}
+    </select>
+     <select id="checkUser" resultMap="BaseResultMap">
+    	SELECT * FROM t_user WHERE USER_NAME = #{userName}
+    </select>
+    <select id="getPage" resultMap="BaseResultMap">
+    SELECT * FROM (
+		SELECT
+			@rowNum := @rowNum + 1 AS row,
+			t.* 
+		FROM
+			t_user t,
+			( SELECT @rowNum := 0 ) r
+		) a WHERE a.row BETWEEN #{start} AND #{end}
+     </select>
+     <select id="getCount" resultType="java.lang.Integer">
+    	SELECT COUNT(*) FROM t_user
+    </select>
+    <update id="updateUserById" parameterType="com.luo.domain.User">
+    	UPDATE t_user SET USER_NAME = #{userName},USER_PASSWORD = #{userPassword} WHERE USER_ID = #{userId}
+    </update>
+    
+    <select id="findListByUserName" resultMap="BaseResultMap">
+     SELECT * FROM (
+		SELECT
+			@rowNum := @rowNum + 1 AS row,
+			t.* 
+		FROM
+			t_user t,
+			( SELECT @rowNum := 0 ) r
+			WHERE t.USER_NAME = #{userName}
+		) a WHERE
+		
+		 a.row BETWEEN #{start} AND #{end}
+     </select>
+     <select id="getCountByUserName" resultType="java.lang.Integer">
+    	SELECT COUNT(*) FROM t_user WHERE USER_NAME = #{userName}
+    </select>
+     
+    
+    
+    
+    
+</mapper>

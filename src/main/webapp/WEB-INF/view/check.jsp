@@ -14,7 +14,7 @@
   
  
     body{margin: 10px;}
-    .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+    .demo-carousel{height: 210px; line-height: 200px; text-align: center;}
   </style>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>用户列表</title>
